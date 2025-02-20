@@ -15,9 +15,9 @@ This dataset consists of credit card transactions in the western United States.
 
    ```
   **-ตรวจสอบการกระจายของข้อมูลในคอลัมน์ is_fraud ซึ่งจะบอกจำนวนของธุรกรรมที่ทุจริต (1) และไม่ทุจริต (0)**
-    ```r
-    table(ccf$is_fraud)
-    ```
+  ```r
+  table(ccf$is_fraud)
+  ```
 
 ## **ขั้นตอนที่ 2: การคำนวณอัตราส่วนการทุจริต**
   **-คำนวณอัตราส่วนการทุจริต (fraud-to-non-fraud ratio) โดยการหารจำนวนธุรกรรมที่ทุจริต (1) ด้วยจำนวนธุรกรรมที่ไม่ทุจริต (0)**
@@ -38,7 +38,6 @@ This dataset consists of credit card transactions in the western United States.
 ## **ขั้นตอนที่ 3: การปรับสมดุลของข้อมูล (Upsampling)**
   
   - ใช้ฟังก์ชัน upSample() จากแพ็กเกจ caret เพื่อทำการเพิ่มจำนวนข้อมูลที่ไม่ทุจริตให้สมดุลกับข้อมูลที่ทุจริต
-  - เปลี่ยนชื่อคอลัมน์ Class เป็น is_fraud เพื่อความสะดวกในการใช้งาน
   - เปลี่ยนค่าของ is_fraud เป็น factor โดยแทนค่าด้วย "No" (ไม่ทุจริต) และ "Yes" (ทุจริต)
    
    ```r
@@ -46,9 +45,6 @@ This dataset consists of credit card transactions in the western United States.
   set.seed(42)
   ccf_over <- upSample(x = ccf %>% select(-is_fraud), y = as.factor(ccf$is_fraud))
   nrow(ccf_over)
-  # rename column Class to is_fraud
-  ccf_over <- ccf_over %>%
-  rename(is_fraud = Class)
   # convert objtect variable to factor
   ccf_over$is_fraud <- factor(ccf_over$is_fraud, levels = c(0, 1), labels = c("No", "Yes"))
   # check the result
@@ -186,7 +182,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Null deviance: 655653  on 472953  degrees of freedom
 Residual deviance: 408576  on 472951  degrees of freedom
 AIC: 408582
-
 Number of Fisher Scoring iterations: 7
 
 **1. ค่าคงที่ (Intercept**)
