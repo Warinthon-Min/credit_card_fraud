@@ -38,6 +38,7 @@ This dataset consists of credit card transactions in the western United States.
 ## **ขั้นตอนที่ 3: การปรับสมดุลของข้อมูล (Upsampling)**
   
   - ใช้ฟังก์ชัน upSample() จากแพ็กเกจ caret เพื่อทำการเพิ่มจำนวนข้อมูลที่ไม่ทุจริตให้สมดุลกับข้อมูลที่ทุจริต
+  - เปลี่ยนชื่อ variable class เป็น is_fraud เพื่อให้เข้าใจได้ง่ายขึ้น
   - เปลี่ยนค่าของ is_fraud เป็น factor โดยแทนค่าด้วย "No" (ไม่ทุจริต) และ "Yes" (ทุจริต)
    
    ```r
@@ -45,6 +46,9 @@ This dataset consists of credit card transactions in the western United States.
   set.seed(42)
   ccf_over <- upSample(x = ccf %>% select(-is_fraud), y = as.factor(ccf$is_fraud))
   nrow(ccf_over)
+  # rename column Class to is_fraud
+  ccf_over <- ccf_over %>%
+  rename(is_fraud = Class)
   # convert objtect variable to factor
   ccf_over$is_fraud <- factor(ccf_over$is_fraud, levels = c(0, 1), labels = c("No", "Yes"))
   # check the result
